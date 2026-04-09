@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <ProjectGuid>{B7A2C8D1-E5F6-4890-ABCD-123456789ABC}</ProjectGuid>
+    <RootNamespace>IsometricClient</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(ProjectDir)x64\Debug\</OutDir>
+    <IntDir>$(ProjectDir)x64\Debug\Intermediate\</IntDir>
+    <TargetName>IsometricClient</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(ProjectDir)x64\Release\</OutDir>
+    <IntDir>$(ProjectDir)x64\Release\Intermediate\</IntDir>
+    <TargetName>IsometricClient</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;WIN32_LEAN_AND_MEAN;_WINSOCK_DEPRECATED_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)vendor;$(ProjectDir)proto_gen;C:\vcpkg\installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;dxgi.lib;ws2_32.lib;libprotobufd.lib;assimp-vc145-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\vcpkg\installed\x64-windows\debug\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy /Y "C:\vcpkg\installed\x64-windows\debug\bin\*.dll" "$(OutDir)"</Command>
+      <Message>Copying vcpkg debug DLLs...</Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;WIN32_LEAN_AND_MEAN;_WINSOCK_DEPRECATED_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)vendor;$(ProjectDir)proto_gen;C:\vcpkg\installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;dxgi.lib;ws2_32.lib;libprotobuf.lib;assimp-vc145-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\vcpkg\installed\x64-windows\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy /Y "C:\vcpkg\installed\x64-windows\bin\*.dll" "$(OutDir)"</Command>
+      <Message>Copying vcpkg release DLLs...</Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Core\WinMain.cpp" />
+    <ClCompile Include="src\Core\DX11Device.cpp" />
+    <ClCompile Include="src\Core\EventLogger.cpp" />
+    <ClCompile Include="src\Core\Input.cpp" />
+    <ClCompile Include="src\UI\UIManager.cpp" />
+    <ClCompile Include="vendor\imgui\imgui.cpp" />
+    <ClCompile Include="vendor\imgui\imgui_draw.cpp" />
+    <ClCompile Include="vendor\imgui\imgui_tables.cpp" />
+    <ClCompile Include="vendor\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="vendor\imgui\imgui_demo.cpp" />
+    <ClCompile Include="vendor\imgui\imgui_impl_win32.cpp" />
+    <ClCompile Include="vendor\imgui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="src\Renderer\Pipeline.cpp" />
+    <ClCompile Include="src\Renderer\ObjLoader.cpp" />
+    <ClCompile Include="src\Renderer\TextureLoader.cpp" />
+    <ClCompile Include="src\Renderer\Camera.cpp" />
+    <ClCompile Include="src\Renderer\MeshCache.cpp" />
+    <ClCompile Include="src\Renderer\MaterialManager.cpp" />
+    <ClCompile Include="src\Renderer\InstanceRenderer.cpp" />
+    <ClCompile Include="src\Scene\SceneManager.cpp" />
+    <ClCompile Include="src\Network\TcpClient.cpp" />
+    <ClCompile Include="src\Network\PacketBuilder.cpp" />
+    <ClCompile Include="src\Core\App.cpp" />
+    <ClCompile Include="src\Scene\LoginScene.cpp" />
+    <ClCompile Include="src\Scene\CharSelectScene.cpp" />
+    <ClCompile Include="src\Scene\LobbyScene.cpp" />
+    <ClCompile Include="src\Scene\GameScene.cpp" />
+    <ClCompile Include="src\Game\DungeonGenerator.cpp" />
+    <ClCompile Include="src\Game\PlayerController.cpp" />
+    <ClCompile Include="src\Game\EntityManager.cpp" />
+    <ClCompile Include="src\Game\CombatManager.cpp" />
+    <ClCompile Include="src\Renderer\EffectRenderer.cpp" />
+    <ClCompile Include="src\Renderer\MinimapRenderer.cpp" />
+    <ClCompile Include="src\Network\NetworkContext.cpp" />
+    <ClCompile Include="proto_gen\Enum.pb.cc" />
+    <ClCompile Include="proto_gen\Common.pb.cc" />
+    <ClCompile Include="proto_gen\Auth.pb.cc" />
+    <ClCompile Include="proto_gen\Game.pb.cc" />
+    <ClCompile Include="proto_gen\Social.pb.cc" />
+    <ClCompile Include="proto_gen\Inventory.pb.cc" />
+    <ClCompile Include="proto_gen\Currency.pb.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Core\DX11Device.h" />
+    <ClInclude Include="src\Core\EventLogger.h" />
+    <ClInclude Include="src\Core\Timer.h" />
+    <ClInclude Include="src\Core\Input.h" />
+    <ClInclude Include="src\Game\CombatManager.h" />
+    <ClInclude Include="src\UI\UIManager.h" />
+    <ClInclude Include="src\Renderer\Pipeline.h" />
+    <ClInclude Include="src\Renderer\Mesh.h" />
+    <ClInclude Include="src\Renderer\InstanceRenderer.h" />
+    <ClInclude Include="src\Renderer\ObjLoader.h" />
+    <ClInclude Include="src\Renderer\TextureLoader.h" />
+    <ClInclude Include="src\Renderer\Camera.h" />
+    <ClInclude Include="src\Renderer\Material.h" />
+    <ClInclude Include="src\Renderer\MaterialManager.h" />
+    <ClInclude Include="src\Renderer\MeshCache.h" />
+    <ClInclude Include="src\Scene\IScene.h" />
+    <ClInclude Include="src\Scene\SceneManager.h" />
+    <ClInclude Include="src\Network\TcpClient.h" />
+    <ClInclude Include="src\Network\RecvBuffer.h" />
+    <ClInclude Include="src\Network\PacketFramer.h" />
+    <ClInclude Include="src\Network\MsgId.h" />
+    <ClInclude Include="src\Network\PacketHandler.h" />
+    <ClInclude Include="src\Network\PacketBuilder.h" />
+    <ClInclude Include="src\Data\PlayerData.h" />
+    <ClInclude Include="src\Data\SkillData.h" />
+    <ClInclude Include="src\Data\InventoryData.h" />
+    <ClInclude Include="src\Data\CurrencyData.h" />
+    <ClInclude Include="src\Data\ChatHistory.h" />
+    <ClInclude Include="src\Core\App.h" />
+    <ClInclude Include="src\Scene\LoginScene.h" />
+    <ClInclude Include="src\Scene\CharSelectScene.h" />
+    <ClInclude Include="src\Scene\LobbyScene.h" />
+    <ClInclude Include="src\Scene\GameScene.h" />
+    <ClInclude Include="src\Game\DungeonGenerator.h" />
+    <ClInclude Include="src\Game\PlayerController.h" />
+    <ClInclude Include="src\Game\EntityManager.h" />
+    <ClInclude Include="src\Renderer\EffectRenderer.h" />
+    <ClInclude Include="src\Core\EngineContext.h" />
+    <ClInclude Include="src\Game\SessionState.h" />
+    <ClInclude Include="src\Network\NetworkContext.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

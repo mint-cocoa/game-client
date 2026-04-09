@@ -1,0 +1,19 @@
+# Build
+x64/
+Debug/
+Release/
+*.obj
+*.pdb
+*.ilk
+*.exe
+*.lib
+*.dll
+*.user
+*.suo
+.vs/
+
+# Generated
+proto_gen/*.pb.cc
+proto_gen/*.pb.h
+
+.venv/
