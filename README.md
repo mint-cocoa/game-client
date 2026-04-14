@@ -1,16 +1,16 @@
 # Isometric Game Client
 
-DirectX 11 기반 아이소메트릭 멀티플레이어 던전 크롤러 게임 클라이언트입니다.  
-서버(ServerCore v4)와 TCP/Protobuf 프로토콜로 통신하며, 실시간 전투, 인벤토리, 파티, 채팅 등의 기능을 제공합니다.
+A multiplayer dungeon crawler game client built with DirectX 11 and C++.  
+Communicates with the backend server (ServerCore v4) via TCP/Protobuf, featuring real-time combat, inventory, party, and chat systems.
 
 ## Tech Stack
 
-| 분류 | 기술 |
-|------|------|
+| Category | Technology |
+|----------|------------|
 | Language | C++20 (MSVC v143) |
 | Graphics | Direct3D 11 |
 | UI | ImGui |
-| Networking | Winsock2 + IOCP (비동기, 단일 스레드) |
+| Networking | Winsock2 + IOCP (async, single-threaded) |
 | Serialization | Protocol Buffers 3 |
 | Asset Loading | Assimp, stb_image |
 
@@ -18,107 +18,107 @@ DirectX 11 기반 아이소메트릭 멀티플레이어 던전 크롤러 게임 
 
 ### Prerequisites
 
-- **Visual Studio 2022+** (C++ 워크로드, MSVC v143)
-- **vcpkg** (`C:\vcpkg\`)에 다음 패키지 설치:
+- **Visual Studio 2022+** with C++ workload (MSVC v143)
+- **vcpkg** at `C:\vcpkg\` with the following packages:
   - `protobuf`
   - `assimp`
-- **Windows SDK** (DirectX 11 포함)
+- **Windows SDK** (includes DirectX 11)
 
-### Build
+### Build Instructions
 
 ```bash
 # Visual Studio
-IsometricClient.sln 열기 -> x64 Debug/Release -> 빌드
+Open IsometricClient.sln -> Select x64 Debug/Release -> Build
 
 # Command Line
 msbuild IsometricClient.sln /p:Configuration=Debug /p:Platform=x64
 ```
 
-출력: `x64\Debug\IsometricClient.exe`
+Output: `x64\Debug\IsometricClient.exe`
 
 ## Run
 
 ```bash
-# 기본 실행
+# Default
 ./x64/Debug/IsometricClient.exe
 
-# 커스텀 윈도우
+# Custom window
 ./x64/Debug/IsometricClient.exe -t "My Client" -w 1920 -h 1080 -x 100 -y 50
 ```
 
-| 옵션 | 설명 | 기본값 |
-|------|------|--------|
-| `-t` | 윈도우 타이틀 | "Isometric Client" |
-| `-w` | 너비 | 1280 |
-| `-h` | 높이 | 720 |
-| `-x` | X 위치 | auto |
-| `-y` | Y 위치 | auto |
+| Flag | Description | Default |
+|------|-------------|---------|
+| `-t` | Window title | "Isometric Client" |
+| `-w` | Width | 1280 |
+| `-h` | Height | 720 |
+| `-x` | X position | auto |
+| `-y` | Y position | auto |
 
-서버 기본 주소: `127.0.0.1:7777` (로그인 화면에서 변경 가능)
+Default server address: `127.0.0.1:7777` (configurable on the login screen)
 
 ### Demo Mode
 
 ```bash
-# 2개 클라이언트 + WSL 서버 동시 실행
+# Launches 2 clients + WSL server simultaneously
 .\run_demo.bat
 ```
 
 ## Controls
 
-| 키 | 동작 |
-|----|------|
-| WASD | 이동 |
-| 좌클릭 | 공격 |
-| E | 인벤토리 |
-| Tab | 리더보드 |
-| Enter | 채팅 |
+| Key | Action |
+|-----|--------|
+| WASD | Movement |
+| Left Click | Attack |
+| E | Inventory |
+| Tab | Leaderboard |
+| Enter | Chat |
 
 ## Project Structure
 
 ```
 src/
-├── Core/           # 엔진 기반 (App, WinMain, DX11Device, Input, Timer)
-├── Renderer/       # 렌더링 (Pipeline, Camera, InstanceRenderer, EffectRenderer, Minimap)
-├── Scene/          # 씬 관리 (Login, CharSelect, Lobby, Game)
-├── Network/        # TCP/IOCP 네트워킹 (TcpClient, PacketFramer, PacketBuilder)
-├── Game/           # 게임 로직 (EntityManager, PlayerController, CombatManager, DungeonGenerator)
-├── Data/           # 데이터 구조 (Player, Inventory, Skill, Currency, Chat)
+├── Core/           # Engine foundation (App, WinMain, DX11Device, Input, Timer)
+├── Renderer/       # Rendering (Pipeline, Camera, InstanceRenderer, EffectRenderer, Minimap)
+├── Scene/          # Scene management (Login, CharSelect, Lobby, Game)
+├── Network/        # TCP/IOCP networking (TcpClient, PacketFramer, PacketBuilder)
+├── Game/           # Game logic (EntityManager, PlayerController, CombatManager, DungeonGenerator)
+├── Data/           # Data structures (Player, Inventory, Skill, Currency, Chat)
 └── UI/             # ImGui UI
 
-proto/              # Protobuf 정의 (Auth, Game, Social, Inventory, Currency)
+proto/              # Protobuf definitions (Auth, Game, Social, Inventory, Currency)
 assets/
-├── fbx/            # FBX 소스 모델
-├── models/         # OBJ/MTL 런타임 모델
-├── shaders/        # HLSL 셰이더 (default, effect, minimap)
-└── textures/       # 런타임 텍스처
-tools/              # 데모 녹화/편집 스크립트
+├── fbx/            # FBX source models
+├── models/         # OBJ/MTL runtime models
+├── shaders/        # HLSL shaders (default, effect, minimap)
+└── textures/       # Runtime textures
+tools/              # Demo recording/editing scripts
 ```
 
 ## Architecture
 
 ### Rendering
 
-- **아이소메트릭 카메라**: 고정 30 pitch / 45 yaw, 플레이어 추적 + 줌
-- **인스턴스 렌더링**: 동일 메시(벽, 바닥, 배럴 등) 배치 렌더링으로 드로우콜 최소화
-- **이펙트 렌더러**: 투사체, 피격 파티클
-- **미니맵**: 실시간 그리드 시각화
+- **Isometric Camera**: Fixed 30° pitch / 45° yaw with player tracking and zoom
+- **Instanced Rendering**: Batches identical meshes (walls, floors, barrels, etc.) to minimize draw calls
+- **Effect Renderer**: Projectiles and hit particle effects
+- **Minimap**: Real-time grid visualization with entity markers
 
 ### Networking
 
-- **IOCP 비동기 I/O**: 단일 스레드, ConnectEx/WSARecv/WSASend, 프레임당 1회 완료 폴링
-- **패킷 구조**: `[2B size][2B msgId][protobuf payload]`
-- **이동 전송**: 20Hz (50ms 쓰로틀)
-- **메시지 핸들러**: 씬 진입 시 등록, 퇴장 시 해제
+- **IOCP Async I/O**: Single-threaded, uses ConnectEx/WSARecv/WSASend with per-frame completion polling
+- **Packet Format**: `[2B size][2B msgId][protobuf payload]`
+- **Movement Send Rate**: 20 Hz (50ms throttle)
+- **Message Handlers**: Registered on scene enter, unregistered on scene exit
 
 ### Message ID Ranges
 
-| 범위 | 용도 |
-|------|------|
-| 101-118 | 인증, 룸 관리 |
-| 201-219 | 이동, 전투, 스폰, 아이템, 포탈 |
-| 301-309 | 채팅, 파티 |
-| 501-509 | 인벤토리 |
-| 601-604 | 재화 |
+| Range | Purpose |
+|-------|---------|
+| 101-118 | Authentication, room management |
+| 201-219 | Movement, combat, spawning, items, portals |
+| 301-309 | Chat, party |
+| 501-509 | Inventory |
+| 601-604 | Currency |
 
 ### Game Flow
 
@@ -126,10 +126,10 @@ tools/              # 데모 녹화/편집 스크립트
 Login -> CharSelect -> Lobby -> Game
 ```
 
-각 씬은 진입 시 패킷 핸들러를 등록하고, GameScene은 SceneReady 메시지로 서버에 준비 완료를 알립니다.
+Each scene registers its own packet handlers on entry. GameScene sends a SceneReady message to notify the server before receiving broadcasts.
 
 ### Combat
 
-1. `C_Attack` -> 서버 검증 -> `S_Attack` (애니메이션 브로드캐스트)
-2. `S_Damage` (결과: 데미지, 잔여HP, 사망 여부)
-3. 클라이언트: 데미지 팝업, 피격 플래시, HP 바 표시
+1. `C_Attack` -> server validation -> `S_Attack` (animation broadcast)
+2. `S_Damage` (result: damage dealt, remaining HP, death flag)
+3. Client-side feedback: damage popups, hit flash, HP bar display
